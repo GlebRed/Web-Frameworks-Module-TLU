@@ -11,9 +11,30 @@
 |
 */
 
+
 Route::get('/', function () {
-    return view('welcome');
+
+  $bookmarks = \App\Bookmark::all();
+
+  return view('welcome')->with('bookmarks', $bookmarks);
+
+
 });
+
+
+Route::group(['middleware' => 'auth'], function () {
+
+  Route::get('submit', 'BookmarkController@index');
+  Route::post('submit', 'BookmarkController@store');
+
+
+
+});
+
+
+
+
+
 
 Auth::routes();
 
